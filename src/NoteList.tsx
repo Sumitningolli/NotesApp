@@ -116,13 +116,43 @@ export function NoteList({
           </Col>
         </Row>
       </Form>
-      <Row xs={1} sm={2} lg={3} xl={4} className="g-3">
-        {filteredNotes.map((note) => (
-          <Col key={note.id}>
-            <NoteCard id={note.id} title={note.title} tags={note.tags} />
-          </Col>
-        ))}
-      </Row>
+      {filteredNotes.length === 0 ? (
+        <div className="text-center py-5">
+          {notes.length === 0 ? (
+            <>
+              <h3 className="text-muted mb-3">Welcome to Notes App!</h3>
+              <p className="text-muted mb-4">
+                You don't have any notes yet. Create your first note to get started!
+              </p>
+              <Link to="/new">
+                <Button variant="primary" size="lg">
+                  Create Your First Note
+                </Button>
+              </Link>
+            </>
+          ) : (
+            <>
+              <h3 className="text-muted mb-3">No notes found</h3>
+              <p className="text-muted mb-4">
+                Try adjusting your search criteria or create a new note.
+              </p>
+              <Link to="/new">
+                <Button variant="primary">
+                  Create New Note
+                </Button>
+              </Link>
+            </>
+          )}
+        </div>
+      ) : (
+        <Row xs={1} sm={2} lg={3} xl={4} className="g-3">
+          {filteredNotes.map((note) => (
+            <Col key={note.id}>
+              <NoteCard id={note.id} title={note.title} tags={note.tags} />
+            </Col>
+          ))}
+        </Row>
+      )}
       <EditTagsModal
         onUpdateTag={onUpdateTag}
         ondeleteTag={ondeleteTag}
